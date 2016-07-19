@@ -1,0 +1,1 @@
+This is a game called "Glebas: The Rising of AutoBotya"

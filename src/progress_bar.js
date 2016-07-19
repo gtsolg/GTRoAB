@@ -8,8 +8,8 @@ function ProgressBar(parentID, defaultCSS) {
 
 ProgressBar.prototype.setProgress = function(perc) {
     this.bar.htmlObject.style.width = perc + "%";
-}
+};
 
 ProgressBar.prototype.getProgress = function() {
     return parseInt(this.bar.htmlObject.style.width);
-}
+};

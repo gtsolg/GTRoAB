@@ -1,0 +1,22 @@
+.date {
+    position: inherit;
+    top: 40px;
+    font-family:"Comic Sans MS", cursive, sans-serif
+    font-size: large;
+    left: 66%;
+}
+
+.mmr {
+    position: inherit;
+    top: 40px;
+    font-family:"Comic Sans MS", cursive, sans-serif
+    font-size: large;
+}
+
+.money {
+    position: inherit;
+    top: 40px;
+    font-family:"Comic Sans MS", cursive, sans-serif
+    font-size: large;
+    left: 33%;
+}

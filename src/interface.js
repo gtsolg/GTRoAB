@@ -31,7 +31,22 @@ function Status() {
     this.hp = new ProgressBar("status", "hpBar");
     this.energy = new ProgressBar("status", "energyBar");
     this.happiness = new ProgressBar("status", "happinessBar");
+    this.money = new Paragraph("status", "$: 0000010", "money");
+    this.mmr = new Paragraph("status", "MMR: 2500", "mmr");
+    this.date = new Paragraph("status", "date: 01.01.2010", "date");
 }
+
+Status.prototype.setStatusBars = function(hpPerc, energyPerc, happinessPerk) {
+    this.hp.setProgress(hpPerc);
+    this.energy.setProgress(energyPerc);
+    this.happiness.setProgress(happinessPerk);
+};
+
+Status.prototype.setTextValues = function(mmr, money, date) {
+    this.money.setCaption("date: " + date);
+    this.mmr.setCaption("MMR: " + mmr);
+    this.date.setCaption("$: " + money); 
+};
 
 Beard.prototype = new StaticHTMLInterfaceObject();
 function Beard() {

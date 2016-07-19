@@ -64,12 +64,19 @@ function Glebas() {
     this.beard = new Beard();
     this.status = new Status();
     this.face = new Face();
+
+    this.addStyle("glebas");
+    this.beard.addStyle("glebasBeard");
+    this.face.addStyle("glebasFace");
+    this.status.addStyle("status");
 }
 
 Log.prototype = new StaticHTMLInterfaceObject();
 function Log() {
     StaticHTMLInterfaceObject.call(this, "log");
     this.history = [];
+
+    this.addStyle("log");
 }
 
 Log.prototype.invalidate = function() {
@@ -96,11 +103,17 @@ function ActionsHandler() {
     StaticHTMLInterfaceObject.call(this, "actionsHandler");
     this.actions = new HTMLInterfaceObjectCollection("actions");
     this.sections = new HTMLInterfaceObjectCollection("sections");
+
+    this.addStyle("actionsHandler");
+    this.actions.addStyle("actions");
+    this.sections.addStyle("sections");
 }
 
 BackGround.prototype = new StaticHTMLInterfaceObject();
 function BackGround() {
     StaticHTMLInterfaceObject.call(this, "backGround");
+
+    this.addStyle("backGround");
 }
 
 Game.prototype = new StaticHTMLInterfaceObject();
@@ -112,18 +125,8 @@ function Game() {
     this.actionsHandler = new ActionsHandler();
     this.backGround = new BackGround();
 
-    this.backGround.addStyle("backGround");
     this.addStyle("game");
     this.menu.addStyle("menu");
-    this.log.addStyle("log");
-    this.glebas.addStyle("glebas");
-    this.glebas.beard.addStyle("glebasBeard");
-    this.glebas.face.addStyle("glebasFace");
-    this.glebas.status.addStyle("status");
-    
-    this.actionsHandler.addStyle("actionsHandler");
-    this.actionsHandler.actions.addStyle("actions");
-    this.actionsHandler.sections.addStyle("sections");
 
     this.menu.collection.push(new Button("menu", "Home", "menuButton"));
     this.menu.collection.push(new Button("menu", "Dota", "menuButton"));

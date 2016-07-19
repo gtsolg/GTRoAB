@@ -94,3 +94,16 @@ body {
     height: 90%;
     background: darkslateblue;
 }
+
+.button{
+    margin-top: 10px;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    display: block;
+}
+
+.lockedButton{
+    opacity: 50;
+    background-color: gray;
+}

@@ -73,7 +73,7 @@ function Log() {
 }
 
 Log.prototype.invalidate = function() {
-
+    //todo
 };
 
 Log.prototype.addMessage = function(message) {
@@ -81,27 +81,21 @@ Log.prototype.addMessage = function(message) {
     this.invalidate();
 };
 
-Menu.prototype = new StaticHTMLInterfaceObject();
-function Menu() {
-    StaticHTMLInterfaceObject.call(this, "menu");
-    this.buttons = [];
-}
-
-StaticHTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();
-function StaticHTMLInterfaceObjectCollection(htmlObjectID) {
+HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();
+function HTMLInterfaceObjectCollection(htmlObjectID) {
     StaticHTMLInterfaceObject.call(this, htmlObjectID);
     this.collection = [];
 }
 
-StaticHTMLInterfaceObjectCollection.prototype.getElementByIndex = function(index) {
+HTMLInterfaceObjectCollection.prototype.getElementByIndex = function(index) {
     return this.collection[index];
 };
 
 ActionsHandler.prototype = new StaticHTMLInterfaceObject();
 function ActionsHandler() {
     StaticHTMLInterfaceObject.call(this, "actionsHandler");
-    this.actions = new StaticHTMLInterfaceObjectCollection("actions");
-    this.sections = new StaticHTMLInterfaceObjectCollection("sections");
+    this.actions = new HTMLInterfaceObjectCollection("actions");
+    this.sections = new HTMLInterfaceObjectCollection("sections");
 }
 
 BackGround.prototype = new StaticHTMLInterfaceObject();
@@ -110,24 +104,11 @@ function BackGround() {
 }
 
 Game.prototype = new StaticHTMLInterfaceObject();
-
-Game.prototype.createButton = function (parentID, caption, defaultCSS) {
-    var btn = new DynamicHTMLInterfaceObject(parentID, "button");
-    btn.addStyle(defaultCSS);
-    btn.htmlObject.innerHTML = caption;
-    return btn;
-};
-
-function test(game) {
-    alert(2);
-    game.glebas.status.setProgress(parseInt(Math.random() * 100));
-}
-
 function Game() {
     StaticHTMLInterfaceObject.call(this, "game");
     this.glebas = new Glebas();
     this.log = new Log();
-    this.menu = new Menu();
+    this.menu = new HTMLInterfaceObjectCollection("menu");
     this.actionsHandler = new ActionsHandler();
     this.backGround = new BackGround();
 
@@ -144,6 +125,6 @@ function Game() {
     this.actionsHandler.actions.addStyle("actions");
     this.actionsHandler.sections.addStyle("sections");
 
-    this.homeBtn = this.createButton("menu", "Home", "menuButton");
-    this.dotaBtn = this.createButton("menu", "Dota", "menuButton");
+    this.menu.collection.push(new Button("menu", "Home", "menuButton"));
+    this.menu.collection.push(new Button("menu", "Dota", "menuButton"));
 }

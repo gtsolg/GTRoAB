@@ -128,6 +128,6 @@ function Game() {
     this.addStyle("game");
     this.menu.addStyle("menu");
 
-    this.menu.collection.push(new Button("menu", "Home", "menuButton"));
-    this.menu.collection.push(new Button("menu", "Dota", "menuButton"));
+    this.menu.collection.push(new Button("menu", "Home", "menuButton", function() {alert("Home");} ));
+    this.menu.collection.push(new Button("menu", "Dota", "menuButton", function() {alert("Dota");}));
 }

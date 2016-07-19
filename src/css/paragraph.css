@@ -20,3 +20,9 @@
     font-size: large;
     left: 33%;
 }
+
+.logParagraph {
+    display: block;
+    font-family:"Comic Sans MS", cursive, sans-serif
+    font-size: large;
+}

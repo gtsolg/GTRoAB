@@ -54,7 +54,7 @@ body {
 
 .log {
     margin: 5px 5px;
-    /*left: 575px;*/
+    overflow-y: scroll;
     right: 10%;
     width: 35%;
     height: 75px;

@@ -1,3 +1,4 @@
+// todo: inherit from DynamicHTMLInterfaceObject
 function Paragraph(parentID, text, defaultCSS) {
     this.paragraph = new DynamicHTMLInterfaceObject(parentID, "p");
     this.setCaption(text);

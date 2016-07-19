@@ -18,8 +18,24 @@ DynamicHTMLInterfaceObject.prototype = new HTMLInterfaceObject();
 function DynamicHTMLInterfaceObject(parentID, elementType) {
     HTMLInterfaceObject.call(this);
     this.htmlObject = document.createElement(elementType);
-    document.getElementById(parentID).appendChild(this.htmlObject);
+    this.parent = document.getElementById(parentID);
+    this.hidden = true;
+    this.show();
 }
+
+DynamicHTMLInterfaceObject.prototype.show = function() {
+    if (this.hidden) {
+        this.hidden = false;
+        this.parent.appendChild(this.htmlObject);
+    }
+};
+
+DynamicHTMLInterfaceObject.prototype.hide = function() {
+    if (!this.hidden) {
+        this.parent.removeChild(this.htmlObject);
+        this.hidden = true;
+    }
+};
 
 DynamicHTMLInterfaceObject.prototype.setInnerHTML = function(text) {
     this.htmlObject.innerHTML = text;  
@@ -71,23 +87,6 @@ function Glebas() {
     this.status.addStyle("status");
 }
 
-Log.prototype = new StaticHTMLInterfaceObject();
-function Log() {
-    StaticHTMLInterfaceObject.call(this, "log");
-    this.history = [];
-
-    this.addStyle("log");
-}
-
-Log.prototype.invalidate = function() {
-    //todo
-};
-
-Log.prototype.addMessage = function(message) {
-    this.history.push(message);
-    this.invalidate();
-};
-
 HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();
 function HTMLInterfaceObjectCollection(htmlObjectID) {
     StaticHTMLInterfaceObject.call(this, htmlObjectID);
@@ -96,6 +95,41 @@ function HTMLInterfaceObjectCollection(htmlObjectID) {
 
 HTMLInterfaceObjectCollection.prototype.getElementByIndex = function(index) {
     return this.collection[index];
+};
+
+HTMLInterfaceObjectCollection.prototype.push = function(item) {
+    return this.collection.push(item);
+};
+
+HTMLInterfaceObjectCollection.prototype.size = function() {
+    return this.collection.length;
+};
+
+Log.prototype = new HTMLInterfaceObjectCollection();
+function Log() {
+    HTMLInterfaceObjectCollection.call(this, "log");
+    this.addStyle("log");
+    
+    this.addMessage('kek');
+    this.addMessage('blabal');
+    this.addMessage('glebas has taken 10 dmg from efuz');
+}
+
+Log.prototype.clear = function(){
+    this.collection.map(function(item) { item.paragraph.hide(); });
+};
+
+Log.prototype.invalidate = function() {
+    this.clear();
+    var i = this.size() - 21 < 0 ? 0 : this.size() - 21;
+    for (; i < this.size(); i++) {
+        this.getElementByIndex(i).paragraph.show();
+    }
+};
+
+Log.prototype.addMessage = function(message) {
+    this.push(new Paragraph("log", message, "logParagraph"));
+    this.invalidate();
 };
 
 ActionsHandler.prototype = new StaticHTMLInterfaceObject();
@@ -129,5 +163,5 @@ function Game() {
     this.menu.addStyle("menu");
 
     this.menu.collection.push(new Button("menu", "Home", "menuButton", function() {alert("Home");} ));
-    this.menu.collection.push(new Button("menu", "Dota", "menuButton", function() {alert("Dota");}));
+    this.menu.collection.push(new Button("menu", "Dota", "menuButton", function() {alert("Dota");} ));
 }

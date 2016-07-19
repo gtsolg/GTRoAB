@@ -1,0 +1,31 @@
+.progressWrapper {
+    border: solid 1px black;
+    width: 90%;
+    height: 15px;
+    display: block;
+    background: darkslategray;
+}
+
+.hpBar {
+    width: 100%;
+    height: inherit;
+    position: inherit;
+    background: red;
+    transition: 0.2s;
+}
+
+.energyBar {
+    width: 100%;
+    height: inherit;
+    position: inherit;
+    background: blue;
+    transition: 0.2s;
+}
+
+.happinessBar {
+    width: 100%;
+    height: inherit;
+    position: inherit;
+    background: green;
+    transition: 0.2s;
+}

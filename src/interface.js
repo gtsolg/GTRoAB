@@ -1,4 +1,5 @@
-function HTMLInterfaceObject() {};
+function HTMLInterfaceObject() {}
+
 HTMLInterfaceObject.prototype.addStyle = function(cssStyle) {
     this.htmlObject.classList.add(cssStyle);
 };
@@ -14,16 +15,22 @@ function StaticHTMLInterfaceObject(id) {
 }
 
 DynamicHTMLInterfaceObject.prototype = new HTMLInterfaceObject();
-function DynamicHTMLInterfaceObject(parentID, elementType, elementID) {
+function DynamicHTMLInterfaceObject(parentID, elementType) {
     HTMLInterfaceObject.call(this);
     this.htmlObject = document.createElement(elementType);
-    this.htmlObject.id = elementID;
     document.getElementById(parentID).appendChild(this.htmlObject);
 }
+
+DynamicHTMLInterfaceObject.prototype.setInnerHTML = function(text) {
+    this.htmlObject.innerHTML = text;  
+};
 
 Status.prototype = new StaticHTMLInterfaceObject();
 function Status() {
     StaticHTMLInterfaceObject.call(this, "status");
+    this.hp = new ProgressBar("status", "hpBar");
+    this.energy = new ProgressBar("status", "energyBar");
+    this.happiness = new ProgressBar("status", "happinessBar");
 }
 
 Beard.prototype = new StaticHTMLInterfaceObject();
@@ -89,11 +96,16 @@ function BackGround() {
 
 Game.prototype = new StaticHTMLInterfaceObject();
 
-Game.prototype.createButton = function (parentID, elementID, caption, defaultCSS = "button") {
-    var btn = new DynamicHTMLInterfaceObject(parentID, "button", elementID);
+Game.prototype.createButton = function (parentID, caption, defaultCSS) {
+    var btn = new DynamicHTMLInterfaceObject(parentID, "button");
     btn.addStyle(defaultCSS);
     btn.htmlObject.innerHTML = caption;
     return btn;
+};
+
+function test(game) {
+    alert(2);
+    game.glebas.status.setProgress(parseInt(Math.random() * 100));
 }
 
 function Game() {
@@ -107,7 +119,7 @@ function Game() {
     this.backGround.addStyle("backGround");
     this.addStyle("game");
     this.menu.addStyle("menu");
-    this.log.addStyle("log")
+    this.log.addStyle("log");
     this.glebas.addStyle("glebas");
     this.glebas.beard.addStyle("glebasBeard");
     this.glebas.face.addStyle("glebasFace");
@@ -117,6 +129,6 @@ function Game() {
     this.actionsHandler.actions.addStyle("actions");
     this.actionsHandler.sections.addStyle("sections");
 
-    this.homeBtn = this.createButton("menu", "homeBtn", "Home", "menuButton");
-    this.dotaBtn = this.createButton("menu", "homeBtn", "Dota", "menuButton");
+    this.homeBtn = this.createButton("menu", "Home", "menuButton");
+    this.dotaBtn = this.createButton("menu", "Dota", "menuButton");
 }

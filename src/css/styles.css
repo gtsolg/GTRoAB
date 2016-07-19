@@ -103,6 +103,15 @@ body {
     display: block;
 }
 
+.menuButton{
+    margin-top: 10px;
+    width: 90%;
+    height: 40px;
+    margin-left: 5%;
+    text-align: center;
+    display: block;
+}
+
 .lockedButton{
     opacity: 50;
     background-color: gray;

@@ -17,10 +17,9 @@ DynamicHTMLInterfaceObject.prototype = new HTMLInterfaceObject();
 function DynamicHTMLInterfaceObject(parentID, elementType, elementID) {
     HTMLInterfaceObject.call(this);
     this.htmlObject = document.createElement(elementType);
+    this.htmlObject.id = elementID;
     document.getElementById(parentID).appendChild(this.htmlObject);
 }
-
-
 
 Status.prototype = new StaticHTMLInterfaceObject();
 function Status() {
@@ -89,6 +88,14 @@ function BackGround() {
 }
 
 Game.prototype = new StaticHTMLInterfaceObject();
+
+Game.prototype.createButton = function (parentID, elementID, caption, defaultCSS = "button") {
+    var btn = new DynamicHTMLInterfaceObject(parentID, "button", elementID);
+    btn.addStyle(defaultCSS);
+    btn.htmlObject.innerHTML = caption;
+    return btn;
+}
+
 function Game() {
     StaticHTMLInterfaceObject.call(this, "game");
     this.glebas = new Glebas();
@@ -110,14 +117,6 @@ function Game() {
     this.actionsHandler.actions.addStyle("actions");
     this.actionsHandler.sections.addStyle("sections");
 
-    this.aloButton = new DynamicHTMLInterfaceObject("actions", "button", "actionButton1");
-    this.aloButton.addStyle("button");
-    this.aloButton.htmlObject.innerHTML = "ALO";
-    this.kekButton = new DynamicHTMLInterfaceObject("actions", "button", "actionButton1");
-    this.kekButton.addStyle("button");
-    this.kekButton.htmlObject.innerHTML = "kek (:";
-    this.kekButton.addStyle("lockedButton");
-
-
-    //this.customButton.htmlObject
+    this.homeBtn = this.createButton("menu", "homeBtn", "Home", "menuButton");
+    this.dotaBtn = this.createButton("menu", "homeBtn", "Dota", "menuButton");
 }

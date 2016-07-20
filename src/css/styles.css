@@ -22,24 +22,22 @@ body {
     margin-top: -20px;
     width: 85px;
     height: 100%;
-    background: blue;
     position: inherit;
 }
 
 .glebasFace {
-    width: 75px;
-    height: 75px;
-   /* background: white;*/
+    margin-left: -25px;
+    margin-top:  -40px;
+    width: 125px;
+    height: 167px;
     background-image: url(../../res/test_glib.png);
     position: inherit;
-    margin: 5px 5px;
     z-index: 10;
 }
 
 .glebasBeard {
     width: 60px;
     height: 150px;
-    background: saddlebrown;
     position: inherit;
     margin: 5px 10px;
     z-index: 1;

@@ -194,8 +194,8 @@ Game.prototype.onMenuBtnClick = function(btn){
 };
 
 Game.prototype.onSectionBtnClick = function(btn){
-    this.actionHandler.lastSectionIndex = btn.index;
-    this.invalidateActions(this.gameManager.secionSets[this.menu.lastButtonIndex])
+    this.actionsHandler.lastSectionIndex = btn.index;
+    this.invalidateActions(this.gameManager.sectionsSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex])
 };
 
 Game.prototype.invalidate = function(){
@@ -216,13 +216,13 @@ Game.prototype.invalidateActionHandler = function(){
 Game.prototype.invalidateSections = function(sectionSet){
     this.actionsHandler.resetSections();
     for(var i in sectionSet.sections){
-        this.actionsHandler.sections.push(new Button("sections", sectionSet.sections[i].caption), "sectionButton", i);
+        this.actionsHandler.sections.push(new Button("sections", sectionSet.sections[i].caption, "sectionButton", i, this.onSectionBtnClick.bind(this)));
     }
 };
 
 Game.prototype.invalidateActions = function(actionSet){
     this.actionsHandler.resetActions();
     for(var i in actionSet.actions){
-        this.actionsHandler.actions.push(new Button("actions", actionSet.actions[i].caption), "actionButton", i);
+        this.actionsHandler.actions.push(new Button("actions", actionSet.actions[i].caption, "actionButton", i));
     }
 };

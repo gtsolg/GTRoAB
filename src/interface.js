@@ -108,7 +108,7 @@ HTMLInterfaceObjectCollection.prototype.size = function() {
 Menu.prototype = new HTMLInterfaceObjectCollection();
 function Menu(){
     HTMLInterfaceObjectCollection.call(this, "menu");
-    this.lastButtonIndex;
+    this.lastButtonIndex = 0;
 }
 
 Log.prototype = new HTMLInterfaceObjectCollection();
@@ -152,10 +152,12 @@ function ActionsHandler() {
 
 ActionsHandler.prototype.resetSections = function(){
     this.lastSectionIndex = 0;
+    this.sections.collection.map(function(item) {item.btn.hide()})
     this.sections.collection = [];
 };
 
 ActionsHandler.prototype.resetActions = function(){
+    this.actions.collection.map(function(item) {item.btn.hide()})
     this.actions.collection = [];
 };
 
@@ -184,8 +186,7 @@ function Game(gm) {
     for(var i in this.gameManager.sectionsSets){
         this.menu.collection.push(new Button("menu", this.gameManager.sectionsSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));
     }
-
-    //this.invalidateActionHandler();
+    this.invalidateActionHandler();
 }
 
 Game.prototype.onMenuBtnClick = function(btn){
@@ -221,7 +222,7 @@ Game.prototype.invalidateSections = function(sectionSet){
 };
 
 Game.prototype.invalidateActions = function(actionSet){
-    console.log(actionSet);
+    this.actionsHandler.resetActions();
     for(var i in actionSet.actions){
         this.actionsHandler.actions.push(new Button("actions", actionSet.actions[i].caption), "actionButton", i);
     }

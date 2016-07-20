@@ -110,14 +110,8 @@ function GameManager(){
     homeSections.addSection(new FridgesSection("Холодильник"));
     homeSections.sections[0].addAction(new Eat());
     homeSections.addSection(new DotaSection("Дота"));
-    // homeSections.addSection(new Sleep());
-    // homeSections.addSection(new WatchTV());
-    // homeSections.addSection(new CleanHouse());
-
-    var streetSections = new HomeSections();
 
     this.sectionsSets.push(homeSections);
-    this.sectionsSets.push(streetSections);
 }
 
 

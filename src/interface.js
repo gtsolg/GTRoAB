@@ -181,7 +181,6 @@ function Game(gm) {
     this.menu.addStyle("menu");
 
     this.gameManager = gm;
-    this.lastClickedMenuButtonIndex;
 
     for(var i in this.gameManager.sectionsSets){
         this.menu.collection.push(new Button("menu", this.gameManager.sectionsSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));

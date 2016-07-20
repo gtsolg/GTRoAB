@@ -109,7 +109,11 @@ function GameManager(){
     var homeSections = new HomeSections();
     homeSections.addSection(new FridgesSection("Холодильник"));
     homeSections.sections[0].addAction(new Eat());
+    homeSections.sections[0].addAction(new Sleep());
+    homeSections.sections[0].addAction(new CleanHouse());
+
     homeSections.addSection(new DotaSection("Дота"));
+    homeSections.sections[1].addAction(new PlayDota());
 
     this.sectionsSets.push(homeSections);
 }

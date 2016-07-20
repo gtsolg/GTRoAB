@@ -128,7 +128,7 @@ body {
 .actionButton{
     margin-top: 10px;
     margin-left: 5px;
-    width: 100px;
+    width: auto;
     height: 50px;
     text-align: center;
 }

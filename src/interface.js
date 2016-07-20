@@ -74,8 +74,8 @@ function Face() {
     StaticHTMLInterfaceObject.call(this, "glebasFace");
 }
 
-Glebas.prototype = new StaticHTMLInterfaceObject();
-function Glebas() {
+IGlebas.prototype = new StaticHTMLInterfaceObject();
+function IGlebas() {
     StaticHTMLInterfaceObject.call(this, "glebas");
     this.beard = new Beard();
     this.status = new Status();
@@ -104,6 +104,12 @@ HTMLInterfaceObjectCollection.prototype.push = function(item) {
 HTMLInterfaceObjectCollection.prototype.size = function() {
     return this.collection.length;
 };
+
+Menu.prototype = new HTMLInterfaceObjectCollection();
+function Menu(){
+    HTMLInterfaceObjectCollection.call(this, "menu");
+    this.lastButtonIndex;
+}
 
 Log.prototype = new HTMLInterfaceObjectCollection();
 function Log() {
@@ -141,7 +147,17 @@ function ActionsHandler() {
     this.addStyle("actionsHandler");
     this.actions.addStyle("actions");
     this.sections.addStyle("sections");
+    this.lastSectionIndex = 0;
 }
+
+ActionsHandler.prototype.resetSections = function(){
+    this.lastSectionIndex = 0;
+    this.sections.collection = [];
+};
+
+ActionsHandler.prototype.resetActions = function(){
+    this.actions.collection = [];
+};
 
 BackGround.prototype = new StaticHTMLInterfaceObject();
 function BackGround() {
@@ -151,17 +167,62 @@ function BackGround() {
 }
 
 Game.prototype = new StaticHTMLInterfaceObject();
-function Game() {
+function Game(gm) {
     StaticHTMLInterfaceObject.call(this, "game");
-    this.glebas = new Glebas();
+    this.glebas = new IGlebas();
     this.log = new Log();
-    this.menu = new HTMLInterfaceObjectCollection("menu");
+    this.menu = new Menu();
     this.actionsHandler = new ActionsHandler();
     this.backGround = new BackGround();
 
     this.addStyle("game");
     this.menu.addStyle("menu");
 
-    this.menu.collection.push(new Button("menu", "Home", "menuButton", function() {alert("Home");} ));
-    this.menu.collection.push(new Button("menu", "Dota", "menuButton", function() {alert("Dota");} ));
+    this.gameManager = gm;
+    this.lastClickedMenuButtonIndex;
+
+    for(var i in this.gameManager.sectionsSets){
+        this.menu.collection.push(new Button("menu", this.gameManager.sectionsSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));
+    }
+
+    //this.invalidateActionHandler();
 }
+
+Game.prototype.onMenuBtnClick = function(btn){
+    this.menu.lastButtonIndex = btn.index;
+    this.invalidateActionHandler();
+};
+
+Game.prototype.onSectionBtnClick = function(btn){
+    this.actionHandler.lastSectionIndex = btn.index;
+    this.invalidateActions(this.gameManager.secionSets[this.menu.lastButtonIndex])
+};
+
+Game.prototype.invalidate = function(){
+    this.invalidateMenu(this.gameManager.sectionSet);
+};
+
+Game.prototype.invalidateMenu = function(sectionSets){
+    for(var i in sectionSets) {
+        this.menu.collection.push(new Button("menu", sectionsSets[i].caption, "menuButton"));
+    }
+};
+
+Game.prototype.invalidateActionHandler = function(){
+    this.invalidateSections(this.gameManager.sectionsSets[this.menu.lastButtonIndex]);
+    this.invalidateActions(this.gameManager.sectionsSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex]);
+};
+
+Game.prototype.invalidateSections = function(sectionSet){
+    this.actionsHandler.resetSections();
+    for(var i in sectionSet.sections){
+        this.actionsHandler.sections.push(new Button("sections", sectionSet.sections[i].caption), "sectionButton", i);
+    }
+};
+
+Game.prototype.invalidateActions = function(actionSet){
+    console.log(actionSet);
+    for(var i in actionSet.actions){
+        this.actionsHandler.actions.push(new Button("actions", actionSet.actions[i].caption), "actionButton", i);
+    }
+};

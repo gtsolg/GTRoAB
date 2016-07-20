@@ -1,3 +1,4 @@
 window.onload = function() {
-    var game = new Game();
+    var gm = new GameManager();
+    var game = new Game(gm);
 }

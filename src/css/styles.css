@@ -116,3 +116,19 @@ body {
     opacity: 50;
     background-color: gray;
 }
+
+.sectionButton{
+    margin-top: 10px;
+    margin-left: 5px;
+    width: 90%;
+    height: 40px;
+    text-align: center;
+}
+
+.actionButton{
+    margin-top: 10px;
+    margin-left: 5px;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+}

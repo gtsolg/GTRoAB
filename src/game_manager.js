@@ -37,43 +37,6 @@ GlebasInstance.prototype.update = function(){
     this.happiness = this.happiness < this.maxHappiness ? this.happiness : this.maxHappiness;
 }
 
-function PlayDota(){
-    this.caption = "Играть в доту";
-    this.energy = -10;
-}
-
-function Sleep(){
-    this.caption = "Поспать";
-    this.energy = 50;
-    this.toolTipCaption = "Глеб спит, востанавливая " + this.energy + " единиц энергии"
-}
-
-function Eat(){
-    this.caption = "Поесть";
-    this.hp = 20;
-    this.happiness = 2;
-    this.time = 15;
-    this.toolTipCaption = "Поесть, востановив " + this.hp + " единиц здоровья и " + this.happiness + " единицы счастья";
-}
-
-function CleanHouse(){
-    this.caption = "Убраться в квартире";
-    this.hp = -10;
-    this.energy = -10;
-    this.happiness = -10;
-    this.money = 3;
-    this.time = 70;
-    this.toolTipCaption = "Убраться в квартире, потратив " + Math.abs(this.energy) + " единиц энергии, здоровья, счастья, но получив " + this.money + " единиц денег от мамки";
-}
-
-function WatchTV() {
-    this.caption = "Посмотреть телевизор";
-    this.happiness = 10;
-
-    this.time = 30;
-    this.toolTipCaption = "Посмотреть телевизор, востановив " + this.happiness + " единиц счастья";
-}
-
 function SectionsSet(){
     this.caption;
     this.sections = [];
@@ -83,29 +46,11 @@ SectionsSet.prototype.addSection = function(section) {
     this.sections.push(section);
 };
 
-function ActionSet() {
-    this.actions = [];
-}
-
-ActionSet.prototype.addAction = function(action){
-  this.actions.push(action);
-};
-
-HomeActions.prototype = new ActionSet();
-function HomeActions(){
-    ActionSet.call(this);
-}
-
-HomeSections.prototype = new SectionsSet();
-function HomeSections(){
-    SectionsSet.call(this);
-    this.caption = "Дом";
-}
-
 function Section(caption) {
     this.caption = caption;
     this.actions = [];
 }
+
 Section.prototype.addAction = function (action) {
     this.actions.push(action);
 };
@@ -124,18 +69,8 @@ function GameManager(){
     this.glebas = new GlebasInstance(100, 100, 100);
     this.time = new Date(2010, 9, 10);
     this.sectionSets = [];
-
-    var homeSections = new HomeSections();
-    homeSections.addSection(new FridgesSection("Холодильник"));
-    homeSections.sections[0].addAction(new Eat());
-    homeSections.sections[0].addAction(new Sleep());
-    homeSections.sections[0].addAction(new CleanHouse());
-    homeSections.sections[0].addAction(new WatchTV());
-
-    homeSections.addSection(new DotaSection("Дота"));
-    homeSections.sections[1].addAction(new PlayDota());
-
-    this.sectionSets.push(homeSections);
+    
+    this.sectionSets.push(new HomeSections());
 }
 
 GameManager.prototype.evaluateAction = function(action){

@@ -1,40 +1,52 @@
-function GlebasInstance(hp, energy, happiness){
-    this.maxHp = hp;
-    this.maxEnergy = energy;
-    this.maxHappiness = happiness;
-
-    this.hp = hp;
-    this.energy = energy;
-    this.happiness = happiness;
-
-    this.money = 50;
-
-    this.strength = 0;
-    this.intellengece = 0;
-    this.endurance = 0;
-    this.charisma = 0;
-    this.luck = 0;
-    this.liver = 100;
-
-    this.mmr = 2500;
+function ItemSet() {
+    this.items = [];
 }
 
+function GlebasInstance(){
+    this.defaultAttributes = new Attributes(0);
+    this.bonusAttributes = new Attributes(0);
+
+    this.hp = this.getMaxHp();
+    this.energy = this.getMaxEnergy();
+    this.happiness = this.getMaxHappiness();
+    this.liver = this.getMaxLiver();
+    
+    this.mmr = 2500;
+    this.money = 50;
+}
+
+GlebasInstance.prototype.getMaxHp = function() {
+    return 100 + Math.floor(0.5 * (this.defaultAttributes.strength + this.bonusAttributes.strength));
+};
+
+GlebasInstance.prototype.getMaxEnergy = function() {
+    return 100 + Math.floor(0.5 * (this.defaultAttributes.energy + this.bonusAttributes.energy));
+};
+
+GlebasInstance.prototype.getMaxHappiness = function() {
+    return 100 + Math.floor(0.5 * (this.defaultAttributes.happiness + this.bonusAttributes.happiness));
+};
+
+GlebasInstance.prototype.getMaxLiver = function() {
+    return 100 + Math.floor(0.5 * (this.defaultAttributes.liver + this.bonusAttributes.liver));
+};
+
 GlebasInstance.prototype.getHpPercents = function(){
-    return parseInt((this.hp / this.maxHp) * 100);
+    return parseInt((this.hp / this.getMaxHp()) * 100);
 };
 
 GlebasInstance.prototype.getEnergyPercents = function(){
-    return parseInt((this.energy / this.maxEnergy) * 100);
+    return parseInt((this.energy / this.getMaxEnergy()) * 100);
 };
 
 GlebasInstance.prototype.getHappinessPercents = function (){
-    return parseInt((this.happiness / this.maxHappiness) * 100);
+    return parseInt((this.happiness / this.getMaxHappiness()) * 100);
 };
 
 GlebasInstance.prototype.update = function(){
-    this.hp = this.hp < this.maxHp ? this.hp : this.maxHp;
-    this.energy = this.energy < this.maxEnergy ? this.energy : this.maxEnergy;
-    this.happiness = this.happiness < this.maxHappiness ? this.happiness : this.maxHappiness;
+    this.hp = Math.min(this.hp, this.getMaxHp());
+    this.energy = Math.min(this.energy, this.getMaxEnergy());
+    this.happiness = Math.min(this.happiness, this.getMaxHappiness());
 };
 
 function SectionsSet(){
@@ -55,22 +67,13 @@ Section.prototype.addAction = function (action) {
     this.actions.push(action);
 };
 
-FridgesSection.prototype = new Section();
-function FridgesSection(caption) {
-    Section.call(this, caption);
-}
-
-DotaSection.prototype = new Section();
-function DotaSection(caption) {
-    Section.call(this, caption);
-}
-
 function GameManager(){
-    this.glebas = new GlebasInstance(100, 100, 100);
+    this.glebas = new GlebasInstance();
     this.time = new Date(2010, 9, 10);
     this.sectionSets = [];
     
     this.sectionSets.push(new HomeSections());
+    this.sectionSets.push(new ShopActions());
 }
 
 GameManager.prototype.evaluateAction = function(action){

@@ -3,12 +3,30 @@ function HomeSections(){
     SectionsSet.call(this);
     this.caption = "Дом";
 
-    this.addSection(new FridgesSection("Холодильник"));
-    this.sections[0].addAction(new Eat());
-    this.sections[0].addAction(new Sleep());
-    this.sections[0].addAction(new CleanHouse());
-    this.sections[0].addAction(new WatchTV());
+    var fridgeSection = new Section("Холодильник");
+    fridgeSection.addAction(new Eat());
+    fridgeSection.addAction(new Sleep());
+    fridgeSection.addAction(new CleanHouse());
+    fridgeSection.addAction(new WatchTV());
+    this.addSection(fridgeSection);
 
-    this.addSection(new DotaSection("Дота"));
-    this.sections[1].addAction(new PlayDota());
+    var dotaSection = new Section("Дота");
+    dotaSection.addAction(new PlayDota());
+    this.addSection(dotaSection);
+}
+
+ShopActions.prototype = new SectionsSet();
+function ShopActions() {
+    SectionsSet.call(this);
+    this.caption = "Магазин";
+    
+    var dnsSection = new Section("DN$");
+    var clothes = new Section("Одежда");
+    var books = new Section("Книги");
+    var blackMarket = new Section("Черный рынок");
+
+    this.addSection(dnsSection);
+    this.addSection(clothes);
+    this.addSection(books);
+    this.addSection(blackMarket);
 }

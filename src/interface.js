@@ -223,6 +223,10 @@ Game.prototype.invalidateSections = function(sectionSet){
 Game.prototype.invalidateActions = function(actionSet){
     this.actionsHandler.resetActions();
     for(var i in actionSet.actions){
-        this.actionsHandler.actions.push(new Button("actions", actionSet.actions[i].caption, "actionButton", i));
+        var newBtn = new Button("actions", actionSet.actions[i].caption, "actionButton", i);
+        if (actionSet.actions[i].toolTipCaption != undefined) {
+            newBtn.addToolTip(actionSet.actions[i].toolTipCaption);
+        }
+        this.actionsHandler.actions.push(newBtn);
     }
 };

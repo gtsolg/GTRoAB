@@ -21,14 +21,15 @@ function PlayDota(){
 function Sleep(){
     this.caption = "Поспать";
     this.energy = 50;
+    this.toolTipCaption = "Глеб спит, востанавливая " + this.energy + " едениц энергии"
 }
 
 function Eat(){
     this.caption = "Поесть";
     this.hp = 20;
     this.happiness = 2;
-
     this.time = 15;
+    this.toolTipCaption = "Поесть, востановив " + this.hp + " едениц здоровья";
 }
 
 function CleanHouse(){

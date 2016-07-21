@@ -1,3 +1,4 @@
+// todo: inherit from DynamicHTMLInterfaceObject
 function Button(parentID, text, defaultCSS, index, callBack) {
     this.btn = new DynamicHTMLInterfaceObject(parentID, "button");
     this.btn.addStyle(defaultCSS);

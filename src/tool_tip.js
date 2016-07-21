@@ -1,3 +1,4 @@
+// todo: inherit from DynamicHTMLInterfaceObject
 function ToolTip(parentID, elementType, caption){
     this.toolTip = new DynamicHTMLInterfaceObject(parentID, elementType);
     this.toolTip.addStyle("toolTip");

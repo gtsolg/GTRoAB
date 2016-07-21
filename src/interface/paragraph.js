@@ -7,4 +7,4 @@ function Paragraph(parentID, text, defaultCSS) {
 
 Paragraph.prototype.setCaption = function(text) {
     this.paragraph.setInnerHTML(text);
-}
+};

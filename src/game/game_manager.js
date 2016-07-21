@@ -21,21 +21,21 @@ function GlebasInstance(hp, energy, happiness){
 
 GlebasInstance.prototype.getHpPercents = function(){
     return parseInt((this.hp / this.maxHp) * 100);
-}
+};
 
 GlebasInstance.prototype.getEnergyPercents = function(){
     return parseInt((this.energy / this.maxEnergy) * 100);
-}
+};
 
 GlebasInstance.prototype.getHappinessPercents = function (){
     return parseInt((this.happiness / this.maxHappiness) * 100);
-}
+};
 
 GlebasInstance.prototype.update = function(){
     this.hp = this.hp < this.maxHp ? this.hp : this.maxHp;
     this.energy = this.energy < this.maxEnergy ? this.energy : this.maxEnergy;
     this.happiness = this.happiness < this.maxHappiness ? this.happiness : this.maxHappiness;
-}
+};
 
 function SectionsSet(){
     this.caption;
@@ -95,4 +95,4 @@ GameManager.prototype.getMoney = function(){
 
 GameManager.prototype.getTime = function(){
     return this.time.toLocaleString();
-}
+};

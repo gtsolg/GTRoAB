@@ -19,4 +19,4 @@ Button.prototype.addToolTip = function(caption){
         this.toolTip = new ToolTip(this.btn.htmlObject.id, "span", caption);
         this.btn.htmlObject.appendChild(this.toolTip.toolTip.htmlObject);
     }
-}
+};

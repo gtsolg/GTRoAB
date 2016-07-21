@@ -91,7 +91,7 @@ IGlebas.prototype.invalidate = function(gameManager){
     var gleb = gameManager.glebas;
     this.status.setStatusBars(gleb.getHpPercents(), gleb.getEnergyPercents(), gleb.getHappinessPercents());
     this.status.setTextValues(gameManager.getMMR(), gameManager.getMoney(), gameManager.getTime());
-}
+};
 
 HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();
 function HTMLInterfaceObjectCollection(htmlObjectID) {
@@ -207,7 +207,7 @@ Game.prototype.onActionBtnClick = function(btn){
     //console.log(this.gameManager);
     this.gameManager.evaluateAction(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex].actions[btn.index]);
     this.invalidate();
-}
+};
 
 Game.prototype.invalidate = function(){
     this.glebas.invalidate(this.gameManager);

@@ -202,6 +202,12 @@ Game.prototype.onSectionBtnClick = function(btn){
     this.invalidateActions(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex])
 };
 
+Game.prototype.onActionBtnClick = function(btn){
+    //console.log(this.gameManager);
+    this.gameManager.evaluateAction(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex].actions[btn.index]);
+    this.invalidate();
+}
+
 Game.prototype.invalidate = function(){
     this.glebas.invalidate(this.gameManager);
     //this.invalidateMenu(this.gameManager.sectionSet);
@@ -228,7 +234,7 @@ Game.prototype.invalidateSections = function(sectionSet){
 Game.prototype.invalidateActions = function(actionSet){
     this.actionsHandler.resetActions();
     for(var i in actionSet.actions){
-        var newBtn = new Button("actions", actionSet.actions[i].caption, "actionButton", i);
+        var newBtn = new Button("actions", actionSet.actions[i].caption, "actionButton", i, this.onActionBtnClick.bind(this));
         if (actionSet.actions[i].toolTipCaption != undefined) {
             newBtn.addToolTip(actionSet.actions[i].toolTipCaption);
         }

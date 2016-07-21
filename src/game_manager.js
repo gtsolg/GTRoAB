@@ -29,6 +29,12 @@ GlebasInstance.prototype.getHappinessPercents = function (){
     return parseInt((this.happiness / this.maxHappiness) * 100);
 }
 
+GlebasInstance.prototype.update = function(){
+    this.hp = this.hp < this.maxHp ? this.hp : this.maxHp;
+    this.energy = this.energy < this.maxEnergy ? this.energy : this.maxEnergy;
+    this.happiness = this.happiness < this.maxHappiness ? this.happiness : this.maxHappiness;
+}
+
 function PlayDota(){
     this.caption = "Играть в доту";
     this.energy = -10;
@@ -62,14 +68,6 @@ function WatchTV() {
     this.happiness = 10;
 
     this.time = 30;
-}
-
-function evaluateAction(action, glebas){
-    for(var param in action){
-        if (glebas[param] != undefined){
-            glebas[param] += action[param];
-        }
-    }
 }
 
 function SectionsSet(){
@@ -135,4 +133,11 @@ function GameManager(){
     this.sectionSets.push(homeSections);
 }
 
-
+GameManager.prototype.evaluateAction = function(action){
+    for(var param in action){
+        if (this.glebas[param] != undefined){
+            this.glebas[param] += action[param];
+        }
+    }
+    this.glebas.update();
+}

@@ -45,7 +45,7 @@ function PlayDota(){
 function Sleep(){
     this.caption = "Поспать";
     this.energy = 50;
-    this.toolTipCaption = "Глеб спит, востанавливая " + this.energy + " едениц энергии"
+    this.toolTipCaption = "Глеб спит, востанавливая " + this.energy + " единиц энергии"
 }
 
 function Eat(){
@@ -53,7 +53,7 @@ function Eat(){
     this.hp = 20;
     this.happiness = 2;
     this.time = 15;
-    this.toolTipCaption = "Поесть, востановив " + this.hp + " едениц здоровья и " + this.happiness + " еденицы счастья";
+    this.toolTipCaption = "Поесть, востановив " + this.hp + " единиц здоровья и " + this.happiness + " единицы счастья";
 }
 
 function CleanHouse(){
@@ -63,7 +63,7 @@ function CleanHouse(){
     this.happiness = -10;
     this.money = 3;
     this.time = 70;
-    this.toolTipCaption = "Убраться в квартире, потратив " + Math.abs(this.energy) + " едениц энергии, здоровья, счастья, но получив " + this.money + " едениц денег от мамки";
+    this.toolTipCaption = "Убраться в квартире, потратив " + Math.abs(this.energy) + " единиц энергии, здоровья, счастья, но получив " + this.money + " единиц денег от мамки";
 }
 
 function WatchTV() {
@@ -71,7 +71,7 @@ function WatchTV() {
     this.happiness = 10;
 
     this.time = 30;
-    this.toolTipCaption = "Посмотреть телевизор, востановив " + this.happiness + " едениц счастья";
+    this.toolTipCaption = "Посмотреть телевизор, востановив " + this.happiness + " единиц счастья";
 }
 
 function SectionsSet(){

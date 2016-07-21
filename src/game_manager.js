@@ -1,4 +1,8 @@
 function GlebasInstance(hp, energy, happiness){
+    this.maxHp = hp;
+    this.maxEnergy = energy;
+    this.maxHappiness = happiness;
+
     this.hp = hp;
     this.energy = energy;
     this.happiness = happiness;
@@ -11,6 +15,18 @@ function GlebasInstance(hp, energy, happiness){
     this.charisma = 0;
     this.luck = 0;
     this.liver = 100;
+}
+
+GlebasInstance.prototype.getHpPercents = function(){
+    return parseInt((this.hp / this.maxHp) * 100);
+}
+
+GlebasInstance.prototype.getEnergyPercents = function(){
+    return parseInt((this.energy / this.maxEnergy) * 100);
+}
+
+GlebasInstance.prototype.getHappinessPercents = function (){
+    return parseInt((this.happiness / this.maxHappiness) * 100);
 }
 
 function PlayDota(){
@@ -105,7 +121,7 @@ function DotaSection(caption) {
 function GameManager(){
     this.glebas = new GlebasInstance(100, 100, 100);
     this.time = new Date(2010, 9, 10);
-    this.sectionsSets = [];
+    this.sectionSets = [];
 
     var homeSections = new HomeSections();
     homeSections.addSection(new FridgesSection("Холодильник"));
@@ -116,7 +132,7 @@ function GameManager(){
     homeSections.addSection(new DotaSection("Дота"));
     homeSections.sections[1].addAction(new PlayDota());
 
-    this.sectionsSets.push(homeSections);
+    this.sectionSets.push(homeSections);
 }
 
 

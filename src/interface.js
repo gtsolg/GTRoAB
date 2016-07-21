@@ -87,6 +87,11 @@ function IGlebas() {
     this.status.addStyle("status");
 }
 
+IGlebas.prototype.invalidate = function(gameManager){
+    var gleb = gameManager.glebas;
+    this.status.setStatusBars(gleb.getHpPercents(), gleb.getEnergyPercents(), gleb.getHappinessPercents());
+}
+
 HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();
 function HTMLInterfaceObjectCollection(htmlObjectID) {
     StaticHTMLInterfaceObject.call(this, htmlObjectID);
@@ -182,9 +187,8 @@ function Game(gm) {
 
     this.gameManager = gm;
 
-    for(var i in this.gameManager.sectionsSets){
-        this.menu.collection.push(new Button("menu", this.gameManager.sectionsSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));
-    }
+    this.invalidateMenu(this.gameManager.sectionSets);
+    this.invalidate();
     this.invalidateActionHandler();
 }
 
@@ -195,22 +199,23 @@ Game.prototype.onMenuBtnClick = function(btn){
 
 Game.prototype.onSectionBtnClick = function(btn){
     this.actionsHandler.lastSectionIndex = btn.index;
-    this.invalidateActions(this.gameManager.sectionsSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex])
+    this.invalidateActions(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex])
 };
 
 Game.prototype.invalidate = function(){
-    this.invalidateMenu(this.gameManager.sectionSet);
+    this.glebas.invalidate(this.gameManager);
+    //this.invalidateMenu(this.gameManager.sectionSet);
 };
 
 Game.prototype.invalidateMenu = function(sectionSets){
     for(var i in sectionSets) {
-        this.menu.collection.push(new Button("menu", sectionsSets[i].caption, "menuButton"));
+        this.menu.collection.push(new Button("menu", sectionSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));
     }
 };
 
 Game.prototype.invalidateActionHandler = function(){
-    this.invalidateSections(this.gameManager.sectionsSets[this.menu.lastButtonIndex]);
-    this.invalidateActions(this.gameManager.sectionsSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex]);
+    this.invalidateSections(this.gameManager.sectionSets[this.menu.lastButtonIndex]);
+    this.invalidateActions(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex]);
 };
 
 Game.prototype.invalidateSections = function(sectionSet){

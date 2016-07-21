@@ -1,22 +1,22 @@
 .date {
     position: inherit;
-    top: 40px;
-    font-family:"Comic Sans MS", cursive, sans-serif
+    top: 32px;
+    font-family:"Comic Sans MS", cursive, sans-serif;
     font-size: large;
     left: 60%;
 }
 
 .mmr {
     position: inherit;
-    top: 40px;
-    font-family:"Comic Sans MS", cursive, sans-serif
+    top: 32px;
+    font-family:"Comic Sans MS", cursive, sans-serif;
     font-size: large;
 }
 
 .money {
     position: inherit;
-    top: 40px;
-    font-family:"Comic Sans MS", cursive, sans-serif
+    top: 32px;
+    font-family:"Comic Sans MS", cursive, sans-serif;
     font-size: large;
     left: 33%;
 }
@@ -24,6 +24,8 @@
 .logParagraph {
     display: block;
     margin-left: 5px;
-    font-family:"Comic Sans MS", cursive, sans-serif
+    font-family:"Comic Sans MS", cursive, sans-serif;
     font-size: large;
+    margin-top: 0;
+    margin-bottom: 0;
 }

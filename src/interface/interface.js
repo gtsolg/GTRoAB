@@ -41,6 +41,10 @@ DynamicHTMLInterfaceObject.prototype.setInnerHTML = function(text) {
     this.htmlObject.innerHTML = text;  
 };
 
+DynamicHTMLInterfaceObject.prototype.randomID = function(suffix) {
+    this.htmlObject.id = parseInt(Math.random() * 100000000) + suffix;
+};
+
 Status.prototype = new StaticHTMLInterfaceObject();
 function Status() {
     StaticHTMLInterfaceObject.call(this, "status");
@@ -51,6 +55,7 @@ function Status() {
     this.mmr = new Paragraph("status", "MMR: 2500", "mmr");
     this.date = new Paragraph("status", "date: 01.01.2010", "date");
 }
+
 
 Status.prototype.setStatusBars = function(hpPerc, energyPerc, happinessPerk) {
     this.hp.setProgress(hpPerc);
@@ -91,6 +96,10 @@ IGlebas.prototype.invalidate = function(gameManager){
     var gleb = gameManager.glebas;
     this.status.setStatusBars(gleb.getHpPercents(), gleb.getEnergyPercents(), gleb.getHappinessPercents());
     this.status.setTextValues(gameManager.getMMR(), gameManager.getMoney(), gameManager.getTime());
+    
+    this.status.hp.setTextProgress(gleb.hp, gleb.getMaxHp());
+    this.status.energy.setTextProgress(gleb.energy, gleb.getMaxEnergy());
+    this.status.happiness.setTextProgress(gleb.happiness, gleb.getMaxHappiness());
 };
 
 HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();

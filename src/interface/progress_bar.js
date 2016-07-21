@@ -1,9 +1,16 @@
-function ProgressBar(parentID, defaultCSS) {
+function ProgressBar(parentID, cssStyle) {
     this.container = new DynamicHTMLInterfaceObject(parentID, "div");
-    this.container.htmlObject.id = parseInt(Math.random() * 100000) + "_Container"
-    this.bar = new DynamicHTMLInterfaceObject(this.container.htmlObject.id, "div");
-    this.container.addStyle("progressWrapper");
-    this.bar.addStyle(defaultCSS);
+    this.container.randomID("_Container");
+    this.container.addStyle("pbarContainer");
+
+
+    this.background = new DynamicHTMLInterfaceObject(this.container.htmlObject.id, "div");
+    this.background.randomID("_Background");
+    this.background.addStyle("pbarBackground");
+    
+    this.bar = new DynamicHTMLInterfaceObject(this.background.htmlObject.id, "div");
+    this.bar.addStyle(cssStyle);
+    this.text = new Paragraph(this.container.htmlObject.id, "", "pbarText");
 }
 
 ProgressBar.prototype.setProgress = function(perc) {
@@ -12,4 +19,8 @@ ProgressBar.prototype.setProgress = function(perc) {
 
 ProgressBar.prototype.getProgress = function() {
     return parseInt(this.bar.htmlObject.style.width);
+};
+
+ProgressBar.prototype.setTextProgress = function (current, max) {
+    this.text.setCaption(current + " / " + max);
 };

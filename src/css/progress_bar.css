@@ -1,9 +1,22 @@
-.progressWrapper {
+.pbarContainer {
     border: solid 1px black;
     width: 90%;
     height: 15px;
-    display: block;
+    text-align: center;
+}
+
+.pbarBackground {
+    width: 100%;
+    height: inherit;
+    position: inherit;
     background: darkslategray;
+}
+
+.pbarText {
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-size: small;
+    color: white;
+    margin-top: -17px;
 }
 
 .hpBar {

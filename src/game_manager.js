@@ -15,6 +15,8 @@ function GlebasInstance(hp, energy, happiness){
     this.charisma = 0;
     this.luck = 0;
     this.liver = 100;
+
+    this.mmr = 2500;
 }
 
 GlebasInstance.prototype.getHpPercents = function(){
@@ -51,7 +53,7 @@ function Eat(){
     this.hp = 20;
     this.happiness = 2;
     this.time = 15;
-    this.toolTipCaption = "Поесть, востановив " + this.hp + " едениц здоровья";
+    this.toolTipCaption = "Поесть, востановив " + this.hp + " едениц здоровья и " + this.happiness + " еденицы счастья";
 }
 
 function CleanHouse(){
@@ -61,6 +63,7 @@ function CleanHouse(){
     this.happiness = -10;
     this.money = 3;
     this.time = 70;
+    this.toolTipCaption = "Убраться в квартире, потратив " + Math.abs(this.energy) + " едениц энергии, здоровья, счастья, но получив " + this.money + " едениц денег от мамки";
 }
 
 function WatchTV() {
@@ -68,6 +71,7 @@ function WatchTV() {
     this.happiness = 10;
 
     this.time = 30;
+    this.toolTipCaption = "Посмотреть телевизор, востановив " + this.happiness + " едениц счастья";
 }
 
 function SectionsSet(){
@@ -126,6 +130,7 @@ function GameManager(){
     homeSections.sections[0].addAction(new Eat());
     homeSections.sections[0].addAction(new Sleep());
     homeSections.sections[0].addAction(new CleanHouse());
+    homeSections.sections[0].addAction(new WatchTV());
 
     homeSections.addSection(new DotaSection("Дота"));
     homeSections.sections[1].addAction(new PlayDota());
@@ -139,5 +144,20 @@ GameManager.prototype.evaluateAction = function(action){
             this.glebas[param] += action[param];
         }
     }
+    if (action.time != undefined) {
+        this.time.setMinutes(this.time.getMinutes() + action.time);
+    }
     this.glebas.update();
+};
+
+GameManager.prototype.getMMR = function(){
+    return this.glebas.mmr;
+};
+
+GameManager.prototype.getMoney = function(){
+    return this.glebas.money;
+};
+
+GameManager.prototype.getTime = function(){
+    return this.time.toLocaleString();
 }

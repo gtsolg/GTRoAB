@@ -59,9 +59,9 @@ Status.prototype.setStatusBars = function(hpPerc, energyPerc, happinessPerk) {
 };
 
 Status.prototype.setTextValues = function(mmr, money, date) {
-    this.money.setCaption("date: " + date);
+    this.money.setCaption("$: " + money);
     this.mmr.setCaption("MMR: " + mmr);
-    this.date.setCaption("$: " + money); 
+    this.date.setCaption(date);
 };
 
 Beard.prototype = new StaticHTMLInterfaceObject();
@@ -90,6 +90,7 @@ function IGlebas() {
 IGlebas.prototype.invalidate = function(gameManager){
     var gleb = gameManager.glebas;
     this.status.setStatusBars(gleb.getHpPercents(), gleb.getEnergyPercents(), gleb.getHappinessPercents());
+    this.status.setTextValues(gameManager.getMMR(), gameManager.getMoney(), gameManager.getTime());
 }
 
 HTMLInterfaceObjectCollection.prototype = new StaticHTMLInterfaceObject();

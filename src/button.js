@@ -4,7 +4,7 @@ function Button(parentID, text, defaultCSS, index, callBack) {
     this.btn.htmlObject.innerHTML = text;
     this.index = index;
     this.btn.htmlObject.id = parseInt(Math.random() * 100000) + "_Container"
-
+    this.toolTip;
     var self = this;
     this.btn.htmlObject.onclick = function() {
         if (callBack != undefined) {
@@ -14,6 +14,8 @@ function Button(parentID, text, defaultCSS, index, callBack) {
 }
 
 Button.prototype.addToolTip = function(caption){
-    this.toolTip = new ToolTip(this.btn.htmlObject.id, "span", caption);
-    this.btn.htmlObject.appendChild(this.toolTip.toolTip.htmlObject);
+    if (this.toolTip == undefined) {
+        this.toolTip = new ToolTip(this.btn.htmlObject.id, "span", caption);
+        this.btn.htmlObject.appendChild(this.toolTip.toolTip.htmlObject);
+    }
 }

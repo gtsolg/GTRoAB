@@ -144,8 +144,11 @@ body {
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
+    opacity: 0;
+    transition: opacity 1s;
 }
 
 .actionButton:hover .toolTip{
     visibility: visible;
+    opacity: 1
 }

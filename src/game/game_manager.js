@@ -13,6 +13,7 @@ function GlebasInstance(){
     
     this.mmr = 2500;
     this.money = 50;
+    //todo: inventory, buffs
 }
 
 GlebasInstance.prototype.getMaxHp = function() {
@@ -41,6 +42,10 @@ GlebasInstance.prototype.getEnergyPercents = function(){
 
 GlebasInstance.prototype.getHappinessPercents = function (){
     return parseInt((this.happiness / this.getMaxHappiness()) * 100);
+};
+
+GlebasInstance.prototype.evaluateBonuses = function() {
+    //todo: evaluate bonuses from items, buffs, global events ...
 };
 
 GlebasInstance.prototype.update = function(){

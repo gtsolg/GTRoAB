@@ -30,9 +30,15 @@ body {
     margin-top:  -40px;
     width: 125px;
     height: 167px;
-    background-image: url(../../res/test_glib.png);
+    background: url(../../res/test_glib.png);
+    border: none;
     position: inherit;
+    outline: 0;
     z-index: 10;
+}
+
+.glebasFace:hover {
+    background-image: url(../../res/test_glib_glowing.png);
 }
 
 .glebasBeard {

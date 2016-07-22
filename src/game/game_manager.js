@@ -77,8 +77,9 @@ function GameManager(){
     this.time = new Date(2010, 9, 10);
     this.sectionSets = [];
     
+    this.glebasSections = new GlebasSections();
     this.sectionSets.push(new HomeSections());
-    this.sectionSets.push(new ShopActions());
+    this.sectionSets.push(new ShopSections());
 }
 
 GameManager.prototype.evaluateAction = function(action){

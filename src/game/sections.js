@@ -15,8 +15,8 @@ function HomeSections(){
     this.addSection(dotaSection);
 }
 
-ShopActions.prototype = new SectionsSet();
-function ShopActions() {
+ShopSections.prototype = new SectionsSet();
+function ShopSections() {
     SectionsSet.call(this);
     this.caption = "Магазин";
     
@@ -29,4 +29,16 @@ function ShopActions() {
     this.addSection(clothes);
     this.addSection(books);
     this.addSection(blackMarket);
+}
+
+GlebasSections.prototype = new SectionsSet();
+function GlebasSections() {
+    SectionsSet.call(this);
+    var inventory = new Section("Инвентарь");
+    var stats = new Section("Характеристики");
+    var equipment = new Section("Экипировка");
+
+    this.addSection(stats);
+    this.addSection(inventory);
+    this.addSection(equipment);
 }

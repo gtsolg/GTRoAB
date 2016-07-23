@@ -13,7 +13,11 @@ function GlebasInstance(){
     
     this.mmr = 2500;
     this.money = 50;
-    //todo: inventory, buffs
+
+    this.equipment = new ItemSet();
+
+    this.takeEquipment(testMouse);
+    this.evaluateBonuses();
 }
 
 GlebasInstance.prototype.getMaxHp = function() {
@@ -44,8 +48,17 @@ GlebasInstance.prototype.getHappinessPercents = function (){
     return parseInt((this.happiness / this.getMaxHappiness()) * 100);
 };
 
+GlebasInstance.prototype.takeEquipment = function(item) {
+    this.equipment.items.push(item);
+};
+
 GlebasInstance.prototype.evaluateBonuses = function() {
-    //todo: evaluate bonuses from items, buffs, global events ...
+    this.bonusAttributes = new Attributes(0);
+    var t = this;
+    this.equipment.items.map(function(item) {
+        t.bonusAttributes.addNonDefault(item.getEvaluatedStats());
+    });
+    this.update();
 };
 
 GlebasInstance.prototype.update = function(){

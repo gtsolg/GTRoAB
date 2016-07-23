@@ -5,7 +5,8 @@ function Affix(name, bonus) {
 
 function Item(name, rarity, description) {
     this.name = name;
-    this.stats = new ValAttributes();
+    this.valStats = new ValAttributes();
+    this.percStats = new PercAttributes();
     this.rarity = rarity; // common, magic, rare, unique
     this.description = description;
     this.prefixes = [];
@@ -33,7 +34,7 @@ Item.prototype.evaluateBonuses = function() {
 
 Item.prototype.getEvaluatedStats = function() {
     var bonuses = this.evaluateBonuses();
-    var result = this.stats.copy();
+    var result = this.valStats.copy();
     result = bonuses.percBonuses.evaluate(result);
     result = bonuses.valBonuses.evaluate(result);
     return result;
@@ -53,6 +54,7 @@ Item.prototype.getStatsDescription = function() {
     stats.mapNonDefault(function(key, val) {
        description.push(attNames[key] + ": " + sign(val) + val); 
     });
+    
     return description;
 };
 
@@ -72,9 +74,10 @@ Item.prototype.getBonusesDescription = function() {
 TestMouse.prototype = new Item();
 function TestMouse() {
     Item.call(this, "Стандартная мышь", "common", "Стандартная мышь с колёсиком прямиком из 90-х");
-    this.stats.liver = 1;
-    this.stats.luck = 5;
-    this.stats.happiness = -1;
+    this.valStats.liver = 1;
+    this.valStats.luck = 5;
+    this.valStats.happiness = -1;
+    this.percStats.hp = 10;
 
     var testPrefix = new Affix("Устрашающая", new PercAttributes());
     testPrefix.bonus.liver = 10;

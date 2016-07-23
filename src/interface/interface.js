@@ -199,22 +199,22 @@ function Game(gm) {
 
     this.invalidateMenu(this.gameManager.sectionSets);
     this.invalidate();
-    this.invalidateActionHandler();
+    this.invalidateActionHandler(this.gameManager.sectionSets[0]);
 }
 
 Game.prototype.onMenuBtnClick = function(btn){
-    this.menu.lastButtonIndex = btn.index;
-    this.invalidateActionHandler();
+    //this.menu.lastButtonIndex = btn.index;
+    this.invalidateActionHandler(btn.index);
 };
 
 Game.prototype.onSectionBtnClick = function(btn){
-    this.actionsHandler.lastSectionIndex = btn.index;
-    this.invalidateActions(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex])
+    //this.actionsHandler.lastSectionIndex = btn.index;
+    this.invalidateActions(btn.index.actions);
 };
 
 Game.prototype.onActionBtnClick = function(btn){
     //console.log(this.gameManager);
-    this.gameManager.evaluateAction(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex].actions[btn.index]);
+    this.gameManager.evaluateAction(btn.index);
     this.invalidate();
 };
 
@@ -223,30 +223,35 @@ Game.prototype.invalidate = function(){
     //this.invalidateMenu(this.gameManager.sectionSet);
 };
 
-Game.prototype.invalidateMenu = function(sectionSets){
-    for(var i in sectionSets) {
-        this.menu.collection.push(new Button("menu", sectionSets[i].caption, "menuButton", i, this.onMenuBtnClick.bind(this)));
-    }
+Game.prototype.onGlebasFaceClick = function () {
+    this.invalidateActionHandler(this.gameManager.glebasSections);
 };
 
-Game.prototype.invalidateActionHandler = function(){
-    this.invalidateSections(this.gameManager.sectionSets[this.menu.lastButtonIndex]);
-    this.invalidateActions(this.gameManager.sectionSets[this.menu.lastButtonIndex].sections[this.actionsHandler.lastSectionIndex]);
+Game.prototype.invalidateMenu = function(){
+    for(var i in this.gameManager.sectionSets) {
+        this.menu.collection.push(new Button("menu", this.gameManager.sectionSets[i].caption, "menuButton", this.gameManager.sectionSets[i], this.onMenuBtnClick.bind(this)));
+    }
+    this.glebas.face.htmlObject.onclick = this.onGlebasFaceClick.bind(this);
+};
+
+Game.prototype.invalidateActionHandler = function(sectionSet){
+    this.invalidateSections(sectionSet.sections);
+    this.invalidateActions(sectionSet.sections[0].actions);
 };
 
 Game.prototype.invalidateSections = function(sectionSet){
     this.actionsHandler.resetSections();
-    for(var i in sectionSet.sections){
-        this.actionsHandler.sections.push(new Button("sections", sectionSet.sections[i].caption, "sectionButton", i, this.onSectionBtnClick.bind(this)));
+    for(var i in sectionSet){
+        this.actionsHandler.sections.push(new Button("sections", sectionSet[i].caption, "sectionButton", sectionSet[i], this.onSectionBtnClick.bind(this)));
     }
 };
 
 Game.prototype.invalidateActions = function(actionSet){
     this.actionsHandler.resetActions();
-    for(var i in actionSet.actions){
-        var newBtn = new Button("actions", actionSet.actions[i].caption, "actionButton", i, this.onActionBtnClick.bind(this));
-        if (actionSet.actions[i].toolTipCaption != undefined) {
-            newBtn.addToolTip(actionSet.actions[i].toolTipCaption);
+    for(var i in actionSet){
+        var newBtn = new Button("actions", actionSet[i].caption, "actionButton", actionSet[i], this.onActionBtnClick.bind(this));
+        if (actionSet[i].toolTipCaption != undefined) {
+            newBtn.addToolTip(actionSet[i].toolTipCaption);
         }
         this.actionsHandler.actions.push(newBtn);
     }

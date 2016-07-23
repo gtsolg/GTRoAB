@@ -6,11 +6,16 @@ function GlebasInstance(){
     this.defaultAttributes = new Attributes(0);
     this.bonusAttributes = new Attributes(0);
 
+    this.defaultAttributes.hp = 100;
+    this.defaultAttributes.energy = 100;
+    this.defaultAttributes.happiness = 100;
+    this.defaultAttributes.liver = 100;
+    
+    // current status
     this.hp = this.getMaxHp();
     this.energy = this.getMaxEnergy();
     this.happiness = this.getMaxHappiness();
     this.liver = this.getMaxLiver();
-    
     this.mmr = 2500;
     this.money = 50;
 
@@ -18,22 +23,25 @@ function GlebasInstance(){
 
     this.takeEquipment(testMouse);
     this.evaluateBonuses();
+    
+    console.log(this.getMaxEnergy());
 }
 
 GlebasInstance.prototype.getMaxHp = function() {
-    return 100 + Math.floor(0.5 * (this.defaultAttributes.strength + this.bonusAttributes.strength));
+    return this.defaultAttributes.hp + this.bonusAttributes.hp +
+        + Math.floor(0.5 * (this.defaultAttributes.strength + this.bonusAttributes.strength));
 };
 
 GlebasInstance.prototype.getMaxEnergy = function() {
-    return 100 + Math.floor(0.5 * (this.defaultAttributes.energy + this.bonusAttributes.energy));
+    return this.defaultAttributes.energy + this.bonusAttributes.energy;
 };
 
 GlebasInstance.prototype.getMaxHappiness = function() {
-    return 100 + Math.floor(0.5 * (this.defaultAttributes.happiness + this.bonusAttributes.happiness));
+    return this.defaultAttributes.happiness + this.bonusAttributes.happiness;
 };
 
 GlebasInstance.prototype.getMaxLiver = function() {
-    return 100 + Math.floor(0.5 * (this.defaultAttributes.liver + this.bonusAttributes.liver));
+    return this.defaultAttributes.liver + this.bonusAttributes.liver;
 };
 
 GlebasInstance.prototype.getHpPercents = function(){
@@ -56,7 +64,7 @@ GlebasInstance.prototype.evaluateBonuses = function() {
     this.bonusAttributes = new Attributes(0);
     var t = this;
     this.equipment.items.map(function(item) {
-        t.bonusAttributes.addNonDefault(item.getEvaluatedStats());
+        t.bonusAttributes.addNonDefault(item.getEvaluatedStats(t.defaultAttributes));
     });
     this.update();
 };

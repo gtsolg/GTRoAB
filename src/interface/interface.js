@@ -152,25 +152,25 @@ Log.prototype.addMessage = function(message) {
     this.invalidate();
 };
 
-ActionsHandler.prototype = new StaticHTMLInterfaceObject();
-function ActionsHandler() {
-    StaticHTMLInterfaceObject.call(this, "actionsHandler");
-    this.actions = new HTMLInterfaceObjectCollection("actions");
+ObjectsHandler.prototype = new StaticHTMLInterfaceObject();
+function ObjectsHandler() {
+    StaticHTMLInterfaceObject.call(this, "objectsHandler");
+    this.objects = new HTMLInterfaceObjectCollection("objects");
     this.sections = new HTMLInterfaceObjectCollection("sections");
 
-    this.addStyle("actionsHandler");
-    this.actions.addStyle("actions");
+    this.addStyle("objectsHandler");
+    this.objects.addStyle("objects");
     this.sections.addStyle("sections");
 }
 
-ActionsHandler.prototype.resetSections = function(){
-    this.sections.collection.map(function(item) {item.btn.hide()})
+ObjectsHandler.prototype.resetSections = function(){
+    this.sections.collection.map(function(item) {item.btn.hide()});
     this.sections.collection = [];
 };
 
-ActionsHandler.prototype.resetActions = function(){
-    this.actions.collection.map(function(item) {item.btn.hide()})
-    this.actions.collection = [];
+ObjectsHandler.prototype.resetObjects = function(){
+    this.objects.collection.map(function(item) {item.btn.hide()});
+    this.objects.collection = [];
 };
 
 BackGround.prototype = new StaticHTMLInterfaceObject();
@@ -186,7 +186,7 @@ function Game(gm) {
     this.glebas = new IGlebas();
     this.log = new Log();
     this.menu = new Menu();
-    this.actionsHandler = new ActionsHandler();
+    this.objectsHandler = new ObjectsHandler();
     this.backGround = new BackGround();
 
     this.addStyle("game");
@@ -196,15 +196,15 @@ function Game(gm) {
 
     this.invalidateMenu(this.gameManager.sectionSets);
     this.invalidate();
-    this.invalidateActionHandler(this.gameManager.sectionSets[0]);
+    this.invalidateObjectsHandler(this.gameManager.sectionSets[0]);
 }
 
 Game.prototype.onMenuBtnClick = function(btn){
-    this.invalidateActionHandler(btn.index);
+    this.invalidateObjectsHandler(btn.index);
 };
 
 Game.prototype.onSectionBtnClick = function(btn){
-    this.invalidateActions(btn.index.actions);
+    this.invalidateObjects(btn.index.objects);
 };
 
 Game.prototype.onActionBtnClick = function(btn){
@@ -217,7 +217,7 @@ Game.prototype.invalidate = function(){
 };
 
 Game.prototype.onGlebasFaceClick = function () {
-    this.invalidateActionHandler(this.gameManager.glebasSections);
+    this.invalidateObjectsHandler(this.gameManager.glebasSections);
 };
 
 Game.prototype.invalidateMenu = function(){
@@ -227,25 +227,25 @@ Game.prototype.invalidateMenu = function(){
     this.glebas.face.htmlObject.onclick = this.onGlebasFaceClick.bind(this);
 };
 
-Game.prototype.invalidateActionHandler = function(sectionSet){
+Game.prototype.invalidateObjectsHandler = function(sectionSet){
     this.invalidateSections(sectionSet.sections);
-    this.invalidateActions(sectionSet.sections[0].actions);
+    this.invalidateObjects(sectionSet.sections[0].objects);
 };
 
 Game.prototype.invalidateSections = function(sectionSet){
-    this.actionsHandler.resetSections();
+    this.objectsHandler.resetSections();
     for(var i in sectionSet){
-        this.actionsHandler.sections.push(new Button("sections", sectionSet[i].caption, "sectionButton", sectionSet[i], this.onSectionBtnClick.bind(this)));
+        this.objectsHandler.sections.push(new Button("sections", sectionSet[i].caption, "sectionButton", sectionSet[i], this.onSectionBtnClick.bind(this)));
     }
 };
 
-Game.prototype.invalidateActions = function(actionSet){
-    this.actionsHandler.resetActions();
-    for(var i in actionSet){
-        var newBtn = new Button("actions", actionSet[i].caption, "actionButton", actionSet[i], this.onActionBtnClick.bind(this));
-        if (actionSet[i].toolTipCaption != undefined) {
-            newBtn.addToolTip(actionSet[i].toolTipCaption);
+Game.prototype.invalidateObjects = function(objectset){
+    this.objectsHandler.resetObjects();
+    for(var i in objectset){
+        var newBtn = new Button("objects", objectset[i].caption, "actionButton", objectset[i], this.onActionBtnClick.bind(this));
+        if (objectset[i].toolTipCaption != undefined) {
+            newBtn.addToolTip(objectset[i].toolTipCaption);
         }
-        this.actionsHandler.actions.push(newBtn);
+        this.objectsHandler.objects.push(newBtn);
     }
 };

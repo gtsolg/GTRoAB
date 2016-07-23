@@ -65,11 +65,11 @@ SectionsSet.prototype.addSection = function(section) {
 
 function Section(caption) {
     this.caption = caption;
-    this.actions = [];
+    this.objects = [];
 }
 
 Section.prototype.addAction = function (action) {
-    this.actions.push(action);
+    this.objects.push(action);
 };
 
 function GameManager(){

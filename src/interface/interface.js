@@ -123,7 +123,6 @@ HTMLInterfaceObjectCollection.prototype.size = function() {
 Menu.prototype = new HTMLInterfaceObjectCollection();
 function Menu(){
     HTMLInterfaceObjectCollection.call(this, "menu");
-    this.lastButtonIndex = 0;
 }
 
 Log.prototype = new HTMLInterfaceObjectCollection();
@@ -162,11 +161,9 @@ function ActionsHandler() {
     this.addStyle("actionsHandler");
     this.actions.addStyle("actions");
     this.sections.addStyle("sections");
-    this.lastSectionIndex = 0;
 }
 
 ActionsHandler.prototype.resetSections = function(){
-    this.lastSectionIndex = 0;
     this.sections.collection.map(function(item) {item.btn.hide()})
     this.sections.collection = [];
 };
@@ -203,24 +200,20 @@ function Game(gm) {
 }
 
 Game.prototype.onMenuBtnClick = function(btn){
-    //this.menu.lastButtonIndex = btn.index;
     this.invalidateActionHandler(btn.index);
 };
 
 Game.prototype.onSectionBtnClick = function(btn){
-    //this.actionsHandler.lastSectionIndex = btn.index;
     this.invalidateActions(btn.index.actions);
 };
 
 Game.prototype.onActionBtnClick = function(btn){
-    //console.log(this.gameManager);
     this.gameManager.evaluateAction(btn.index);
     this.invalidate();
 };
 
 Game.prototype.invalidate = function(){
     this.glebas.invalidate(this.gameManager);
-    //this.invalidateMenu(this.gameManager.sectionSet);
 };
 
 Game.prototype.onGlebasFaceClick = function () {

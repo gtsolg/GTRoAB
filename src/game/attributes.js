@@ -49,6 +49,18 @@ Attributes.prototype.mapNonDefault = function(callback) {
     });
 };
 
+Attributes.prototype.subNonDefault = function(attributes) {
+    var t = this;
+    attributes.mapNonDefault(function(key, val) {
+        if (t[key] == t._defaultVal) {
+            t[key] = val;
+        }
+        else {
+            t[key] -= val;
+        }
+    });
+};
+
 Attributes.prototype.addNonDefault = function (attributes) {
     var t = this;
     attributes.mapNonDefault(function(key, val) {
@@ -104,14 +116,14 @@ var attNames = new AttributesNames();
 
 PercAttributes.prototype = new Attributes();
 function PercAttributes() {
-    Attributes.call(this, 1);
+    Attributes.call(this, 0);
     this._isPerc = true;
 }
 
 PercAttributes.prototype.evaluate = function(stats) {
     var t = this;
     t.map(function(key, val) {
-        stats[key] *= val;
+        stats[key] *= (1 + val / 100);
     });
     return stats;
 };

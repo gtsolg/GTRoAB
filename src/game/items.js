@@ -14,8 +14,8 @@ function Item(name, rarity, description) {
 }
 
 Item.prototype.evaluateBonuses = function() {
-    var percBonuses = new PercAttributes();
-    var valBonuses = new ValAttributes();
+    var percBonuses = this.percStats.copy();
+    var valBonuses = this.valStats.copy();
     this.prefixes.map(function(prefix) {
         prefix.bonus._isPerc
             ? percBonuses.addNonDefault(prefix.bonus)
@@ -32,12 +32,13 @@ Item.prototype.evaluateBonuses = function() {
     };
 };
 
-Item.prototype.getEvaluatedStats = function() {
+Item.prototype.getEvaluatedStats = function(defaultStats) {
+    var newStats = defaultStats.copy();
     var bonuses = this.evaluateBonuses();
-    var result = this.valStats.copy();
-    result = bonuses.percBonuses.evaluate(result);
-    result = bonuses.valBonuses.evaluate(result);
-    return result;
+    newStats = bonuses.valBonuses.evaluate(newStats);
+    newStats = bonuses.percBonuses.evaluate(newStats);
+    newStats.subNonDefault(defaultStats);
+    return newStats;
 };
 
 Item.prototype.getFullName = function() {
@@ -49,12 +50,13 @@ Item.prototype.getFullName = function() {
 
 Item.prototype.getStatsDescription = function() {
     var sign = function (val) { return val > 0 ? "+" : ""; };
-    var stats = this.getEvaluatedStats();
     var description = [];
-    stats.mapNonDefault(function(key, val) {
-       description.push(attNames[key] + ": " + sign(val) + val); 
+    this.valStats.mapNonDefault(function(key, val) {
+       description.push(attNames[key] + ": " + sign(val) + val);
     });
-    
+    this.percStats.mapNonDefault(function(key, val) {
+        description.push(attNames[key] + ": " + sign(val) + val + "%");
+    });
     return description;
 };
 
@@ -62,11 +64,11 @@ Item.prototype.getBonusesDescription = function() {
     var sign = function (val) { return val > 0 ? "+" : ""; };
     var bonuses = this.evaluateBonuses();
     var description = [];
-    bonuses.percBonuses.mapNonDefault(function(key, val) {
-        description.push(attNames[key] + ": " + sign(val) + val + "%");
-    });
     bonuses.valBonuses.mapNonDefault(function(key, val) {
         description.push(attNames[key] + ": " + sign(val) + val);
+    });
+    bonuses.percBonuses.mapNonDefault(function(key, val) {
+        description.push(attNames[key] + ": " + sign(val) + val + "%");
     });
     return description;
 };
@@ -74,15 +76,13 @@ Item.prototype.getBonusesDescription = function() {
 TestMouse.prototype = new Item();
 function TestMouse() {
     Item.call(this, "Стандартная мышь", "common", "Стандартная мышь с колёсиком прямиком из 90-х");
-    this.valStats.liver = 1;
-    this.valStats.luck = 5;
-    this.valStats.happiness = -1;
     this.percStats.hp = 10;
+    this.percStats.happiness = -11;
 
     var testPrefix = new Affix("Устрашающая", new PercAttributes());
     testPrefix.bonus.liver = 10;
     testPrefix.bonus.hp = 5;
-
+    
     var testSuffix = new Affix("Боли", new ValAttributes());
     testSuffix.bonus.energy = -20;
     testSuffix.bonus.mmrBonus = 10;
@@ -92,6 +92,3 @@ function TestMouse() {
 }
 
 var testMouse = new TestMouse();
-console.log(testMouse.getFullName());
-console.log(testMouse.getStatsDescription());
-console.log(testMouse.getBonusesDescription());

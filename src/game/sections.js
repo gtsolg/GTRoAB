@@ -35,7 +35,6 @@ GlebasSections.prototype = new SectionsSet();
 function GlebasSections() {
     SectionsSet.call(this);
     var inventory = new Section("Инвентарь");
-    inventory.addAction(new Eat());
     var stats = new Section("Характеристики");
     var equipment = new Section("Экипировка");
 

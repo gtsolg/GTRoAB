@@ -22,5 +22,5 @@ ProgressBar.prototype.getProgress = function() {
 };
 
 ProgressBar.prototype.setTextProgress = function (current, max) {
-    this.text.setCaption(current + " / " + max);
+    this.text.setCaption(parseInt(current) + " / " + parseInt(max));
 };

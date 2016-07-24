@@ -1,78 +1,3 @@
-function Affix(name, bonus) {
-    this.name = name;
-    this.bonus = bonus;
-}
-
-function Item(name, rarity, description) {
-    this.name = name;
-    this.valStats = new ValAttributes();
-    this.percStats = new PercAttributes();
-    this.rarity = rarity; // common, magic, rare, unique
-    this.description = description;
-    this.prefixes = [];
-    this.suffixes = [];
-}
-
-Item.prototype.evaluateBonuses = function() {
-    var percBonuses = this.percStats.copy();
-    var valBonuses = this.valStats.copy();
-    this.prefixes.map(function(prefix) {
-        prefix.bonus._isPerc
-            ? percBonuses.addNonDefault(prefix.bonus)
-            : valBonuses.addNonDefault(prefix.bonus);
-    });
-    this.suffixes.map(function(suffix) {
-        suffix.bonus._isPerc
-            ? percBonuses.addNonDefault(suffix.bonus)
-            : valBonuses.addNonDefault(suffix.bonus);
-    });
-    return {
-        percBonuses: percBonuses,
-        valBonuses:  valBonuses
-    };
-};
-
-Item.prototype.getEvaluatedStats = function(defaultStats) {
-    var newStats = defaultStats.copy();
-    var bonuses = this.evaluateBonuses();
-    newStats = bonuses.valBonuses.evaluate(newStats);
-    newStats = bonuses.percBonuses.evaluate(newStats);
-    newStats.subNonDefault(defaultStats);
-    return newStats;
-};
-
-Item.prototype.getFullName = function() {
-    var name = this.name;
-    this.prefixes.map(function(prefix) { name = prefix.name + " " + name; } );
-    this.suffixes.map(function(suffix) { name = name + " " + suffix.name; } );
-    return name;
-};
-
-Item.prototype.getStatsDescription = function() {
-    var sign = function (val) { return val > 0 ? "+" : ""; };
-    var description = [];
-    this.valStats.mapNonDefault(function(key, val) {
-       description.push(attNames[key] + ": " + sign(val) + val);
-    });
-    this.percStats.mapNonDefault(function(key, val) {
-        description.push(attNames[key] + ": " + sign(val) + val + "%");
-    });
-    return description;
-};
-
-Item.prototype.getBonusesDescription = function() {
-    var sign = function (val) { return val > 0 ? "+" : ""; };
-    var bonuses = this.evaluateBonuses();
-    var description = [];
-    bonuses.valBonuses.mapNonDefault(function(key, val) {
-        description.push(attNames[key] + ": " + sign(val) + val);
-    });
-    bonuses.percBonuses.mapNonDefault(function(key, val) {
-        description.push(attNames[key] + ": " + sign(val) + val + "%");
-    });
-    return description;
-};
-
 TestMouse.prototype = new Item();
 function TestMouse() {
     Item.call(this, "Стандартная мышь", "common", "Стандартная мышь с колёсиком прямиком из 90-х");
@@ -82,11 +7,11 @@ function TestMouse() {
     var testPrefix = new Affix("Устрашающая", new PercAttributes());
     testPrefix.bonus.liver = 10;
     testPrefix.bonus.hp = 5;
-    
+
     var testSuffix = new Affix("Боли", new ValAttributes());
     testSuffix.bonus.energy = -20;
     testSuffix.bonus.mmrBonus = 10;
-    
+
     this.prefixes.push(testPrefix);
     this.suffixes.push(testSuffix);
 }

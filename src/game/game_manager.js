@@ -2,6 +2,27 @@ function ItemSet() {
     this.items = [];
 }
 
+function BuffManager() {
+    this.buffs = [];
+}
+
+BuffManager.prototype.invalidateBuffs = function(time) {
+    for (var i = 0; i < this.buffs.length; i++) {
+        var buf = this.buffs[i];
+        var endTime = new Date();
+        endTime.setTime(buf.startTime.getTime());
+        endTime.setMinutes(endTime.getMinutes() + buf.duration);
+        if (endTime < time) {
+            this.buffs.splice(i, 1);
+        }
+    }
+};
+
+BuffManager.prototype.addBuf = function(buf, time) {
+    buf.startTime = time;
+    this.buffs.push(buf);
+};
+
 function GlebasInstance(){
     this.defaultAttributes = new Attributes(0);
     this.bonusAttributes = new Attributes(0);
@@ -20,11 +41,11 @@ function GlebasInstance(){
     this.money = 50;
 
     this.equipment = new ItemSet();
+    this.buffManager = new BuffManager();
 
+    this.takeBuff(testBuff, new Date(2010, 9, 10));
     this.takeEquipment(testMouse);
     this.evaluateBonuses();
-    
-    console.log(this.getMaxEnergy());
 }
 
 GlebasInstance.prototype.getMaxHp = function() {
@@ -60,11 +81,18 @@ GlebasInstance.prototype.takeEquipment = function(item) {
     this.equipment.items.push(item);
 };
 
+GlebasInstance.prototype.takeBuff = function(buff, time) {
+    this.buffManager.addBuf(buff, time);
+};
+
 GlebasInstance.prototype.evaluateBonuses = function() {
-    this.bonusAttributes = new Attributes(0);
     var t = this;
-    this.equipment.items.map(function(item) {
+    t.bonusAttributes = new Attributes(0);
+    t.equipment.items.map(function(item) {
         t.bonusAttributes.addNonDefault(item.getEvaluatedStats(t.defaultAttributes));
+    });
+    t.buffManager.buffs.map(function (buff) {
+        t.bonusAttributes.addNonDefault(buff.getEvaluatedStats(t.defaultAttributes)); 
     });
     this.update();
 };
@@ -113,6 +141,8 @@ GameManager.prototype.evaluateAction = function(action){
         this.time.setMinutes(this.time.getMinutes() + action.time);
     }
     this.glebas.update();
+    this.glebas.buffManager.invalidateBuffs(this.time);
+    this.glebas.evaluateBonuses();
 };
 
 GameManager.prototype.getMMR = function(){

@@ -44,6 +44,7 @@ function Item(name, rarity, description) {
     this.rarity = rarity; // common, magic, rare, unique
     this.prefixes = [];
     this.suffixes = [];
+    this.itemType;
 }
 
 Item.prototype.evaluateBonuses = function() {
@@ -92,6 +93,10 @@ Item.prototype.getBonusesDescription = function() {
         description.push(attNames[key] + ": " + sign(val) + val + "%");
     });
     return description;
+};
+
+Item.prototype.affectOn = function(target){
+    target.takeEquipment(this);
 };
 
 Buff.prototype = new Modifier();

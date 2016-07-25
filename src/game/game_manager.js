@@ -1,6 +1,12 @@
 function ItemSet() {
-    this.items = [];
+    this.items = {};
 }
+
+ItemSet.prototype.map = function (callback) {
+    for(var key in this.items){
+        callback(this.items[key]);
+    }
+};
 
 function BuffManager() {
     this.buffs = [];
@@ -44,7 +50,6 @@ function GlebasInstance(){
     this.buffManager = new BuffManager();
 
     this.takeBuff(testBuff, new Date(2010, 9, 10));
-    this.takeEquipment(testMouse);
     this.evaluateBonuses();
 }
 
@@ -78,7 +83,7 @@ GlebasInstance.prototype.getHappinessPercents = function (){
 };
 
 GlebasInstance.prototype.takeEquipment = function(item) {
-    this.equipment.items.push(item);
+    this.equipment.items[item.itemType] = item;
 };
 
 GlebasInstance.prototype.takeBuff = function(buff, time) {
@@ -88,7 +93,7 @@ GlebasInstance.prototype.takeBuff = function(buff, time) {
 GlebasInstance.prototype.evaluateBonuses = function() {
     var t = this;
     t.bonusAttributes = new Attributes(0);
-    t.equipment.items.map(function(item) {
+    t.equipment.map(function(item) {
         t.bonusAttributes.addNonDefault(item.getEvaluatedStats(t.defaultAttributes));
     });
     t.buffManager.buffs.map(function (buff) {
@@ -132,11 +137,7 @@ function GameManager(){
 }
 
 GameManager.prototype.evaluateAction = function(action){
-    for(var param in action){
-        if (this.glebas[param] != undefined){
-            this.glebas[param] += action[param];
-        }
-    }
+    action.affectOn(this.glebas);
     if (action.time != undefined) {
         this.time.setMinutes(this.time.getMinutes() + action.time);
     }

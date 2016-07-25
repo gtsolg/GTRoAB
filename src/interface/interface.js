@@ -214,6 +214,10 @@ Game.prototype.onActionBtnClick = function(btn){
 
 Game.prototype.invalidate = function(){
     this.glebas.invalidate(this.gameManager);
+    var objects = this.gameManager.glebasSections.sections[2].objects = [];
+    this.gameManager.glebas.equipment.map(function(item) {
+        objects.push(item);
+    });
 };
 
 Game.prototype.onGlebasFaceClick = function () {
@@ -239,12 +243,12 @@ Game.prototype.invalidateSections = function(sectionSet){
     }
 };
 
-Game.prototype.invalidateObjects = function(objectset){
+Game.prototype.invalidateObjects = function(objectSet){
     this.objectsHandler.resetObjects();
-    for(var i in objectset){
-        var newBtn = new Button("objects", objectset[i].caption, "actionButton", objectset[i], this.onActionBtnClick.bind(this));
-        if (objectset[i].toolTipCaption != undefined) {
-            newBtn.addToolTip(objectset[i].toolTipCaption);
+    for(var i in objectSet){
+        var newBtn = new Button("objects", objectSet[i].caption, "actionButton", objectSet[i], this.onActionBtnClick.bind(this));
+        if (objectSet[i].toolTipCaption != undefined) {
+            newBtn.addToolTip(objectSet[i].toolTipCaption);
         }
         this.objectsHandler.objects.push(newBtn);
     }

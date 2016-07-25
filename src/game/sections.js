@@ -21,6 +21,8 @@ function ShopSections() {
     this.caption = "Магазин";
     
     var dnsSection = new Section("DN$");
+    dnsSection.addAction(new BuyItem(testMouse));
+    dnsSection.addAction(new BuyItem(testKeyBoard));
     var clothes = new Section("Одежда");
     var books = new Section("Книги");
     var blackMarket = new Section("Черный рынок");

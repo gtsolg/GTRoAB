@@ -42,3 +42,24 @@ function TestKeyBoard() {
 
 var testMouse = new TestMouse();
 var testKeyBoard = new TestKeyBoard();
+
+Mouse.prototype = new Item();
+function Mouse(name) {
+    Item.call(this, name, "", "");
+    this.itemType = "mouse";
+}
+
+MechanicalMouse.prototype = new Mouse();
+function MechanicalMouse() {
+    Mouse.call(this, "Механическая мышь");
+}
+
+OpticalMouse.prototype = new Mouse();
+function OpticalMouse() {
+    Mouse.call(this, "Механическая мышь");
+}
+
+LaserMouse.prototype = new Mouse();
+function LaserMouse() {
+    Mouse.call(this, "Лазерная мышь");
+}

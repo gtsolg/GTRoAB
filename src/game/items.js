@@ -56,10 +56,72 @@ function MechanicalMouse() {
 
 OpticalMouse.prototype = new Mouse();
 function OpticalMouse() {
-    Mouse.call(this, "Механическая мышь");
+    Mouse.call(this, "Оптическая мышь");
 }
 
 LaserMouse.prototype = new Mouse();
 function LaserMouse() {
     Mouse.call(this, "Лазерная мышь");
+}
+
+WirelessMouse.prototype = new Mouse();
+function WirelessMouse() {
+    Mouse.call(this, "Беспроводная мышь");
+}
+
+Keyboard.prototype = new Item();
+function Keyboard(name) {
+    Item.call(this, name, "", "");
+    this.itemType = "keyboard";
+}
+
+MechanicalKeyboard.prototype = new Keyboard();
+function MechanicalKeyboard() {
+    Keyboard.call(this, "Механическая клавиатура");
+}
+
+FlexibleKeyboard.prototype = new Keyboard();
+function FlexibleKeyboard() {
+    Keyboard.call(this, "Резиновая клавиатура");
+}
+
+MembraneKeyboard.prototype = new Keyboard();
+function MembraneKeyboard() {
+    Keyboard.call(this, "Мембранная клавиатура");
+}
+
+ProjectionKeyboard.prototype = new Keyboard();
+function ProjectionKeyboard() {
+    Keyboard.call(this, "Проекционная клавиатура");
+}
+
+Monitor.prototype = new Item();
+function Monitor(name) {
+    Item.call(this, name, "", "");
+    this.itemType = "display";
+}
+
+CRTMonitor.prototype = new Monitor();
+function CRTMonitor() {
+    Keyboard.call(this, "ЭЛТ монитор");
+}
+
+LCMonitor.prototype = new Monitor();
+function LCMonitor() {
+    Keyboard.call(this, "ЖК монитор");
+}
+
+Projector.prototype = new Monitor();
+function Projector() {
+    Keyboard.call(this, "Проектор");
+}
+
+VRGlasses.prototype = new Monitor();
+function VRGlasses() {
+    Keyboard.call(this, "Очки виртуальной реальности");
+}
+
+VRMonitor.prototype = new Monitor();
+function VRMonitor() {
+    Keyboard.call(this, "Виртуальный ретинальный монитор");
 }
